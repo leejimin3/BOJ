@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 		{
 			for (int l = 0; l < M; l++)
 			{
-				if (Farm[k][l] == 1 && !Visit[k][l])
+				if (!Visit[k][l] && Farm[k][l] == 1)
 				{
 					bfs(k, l);
 					cnt++;
