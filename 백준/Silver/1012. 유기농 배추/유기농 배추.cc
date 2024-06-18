@@ -1,92 +1,81 @@
 #include <iostream>
-#include <vector>
+#include <queue>
+
 using namespace std;
 
-bool visit[51][51] = { false };
-bool list[51][51] = {false};
+int M, N, K;
+int Farm[51][51];
+bool Visit[51][51];
 
-void dfs(int i, int j, int M, int N)
+queue<pair<int, int>> Queue;
+int nodeX[4] = {-1, 0, 1, 0};
+int nodeY[4] = {0, -1, 0, 1};
+
+void Init(int M, int N)
 {
-	visit[i][j] = true;
-	if (j + 1 < M && !visit[i][j + 1] && list[i][j + 1] == 1)
+	while (!Queue.empty()) Queue.pop();
+	for (int i = 0; i < M; i++)
 	{
-		dfs(i, j + 1, M, N);
-	}
-	if (j - 1 >= 0 && !visit[i][j - 1] && list[i][j - 1] == true)
-	{
-		dfs(i, j - 1, M, N);
-	}
-
-	if (i + 1 < N && !visit[i + 1][j] && list[i + 1][j] == 1)
-	{
-		dfs(i + 1, j, M, N);
-	}
-	if (i - 1 >= 0 && !visit[i - 1][j] && list[i - 1][j] == true)
-	{
-		dfs(i - 1, j, M, N);
+		for (int j = 0; j < N; j++)
+		{
+			Farm[i][j] = 0;
+			Visit[i][j] = false;
+		}
 	}
 }
 
-int main(int argc, char* argv[]) {
-
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-
-	int T;
-
-	cin >> T;
-
-	for (int t = 0; t < T; t++)
+void bfs(int X, int Y)
+{
+	Queue.push({ X, Y });
+	while (!Queue.empty())
 	{
-		for (int i = 0; i < 51; i++)
+		int x = Queue.front().first;
+		int y = Queue.front().second;
+		Queue.pop();
+		Visit[x][y] = true;
+
+		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 51; j++)
+			int nodex = x + nodeX[i];
+			int nodey = y + nodeY[i];
+
+			if (nodex >= 0 && nodey >= 0 && nodex < N && nodey < M && !Visit[nodex][nodey] && Farm[nodex][nodey] == 1)
 			{
-				visit[i][j] = false;
-				list[i][j] = false;
+				Visit[nodex][nodey] = true;
+				Queue.push({ nodex, nodey });
 			}
 		}
+	}
+}
 
+int main(int argc, char* argv[])
+{
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	int T;
+	cin >> T;
 
-		int M, N, K;
-		int tmp1, tmp2;
+	for (int i = 0; i < T; i++)
+	{
 		int cnt = 0;
 		cin >> M >> N >> K;
+		
+		Init(M, N);
 
-		for (int i = 0; i < K; i++)
+		for (int j = 0; j < K; j++)
 		{
-			cin >> tmp1 >> tmp2;
-			list[tmp2][tmp1] = true;
+			int X, Y;
+			cin >> Y >> X;
+			Farm[X][Y] = 1;
 		}
 
-		for (int i = 0; i < N; i++)
+		for (int k = 0; k < N; k++)
 		{
-			for (int j = 0; j < M; j++)
+			for (int l = 0; l < M; l++)
 			{
-				if (!visit[i][j] && list[i][j] == 1)
+				if (Farm[k][l] == 1 && !Visit[k][l])
 				{
-					visit[i][j] = true;
+					bfs(k, l);
 					cnt++;
-					if (j + 1 < M && !visit[i][j + 1] && list[i][j+1] == true)
-					{
-						dfs(i, j + 1, M, N);
-					}
-					if (j - 1 >= 0 && !visit[i][j - 1] && list[i][j - 1] == true)
-					{
-						dfs(i, j - 1, M, N);
-					}
-
-					if (i + 1 < N && !visit[i + 1][j] && list[i+1][j] == true)
-					{
-						dfs(i + 1, j, M, N);
-					}
-					if (i - 1 >=0 && !visit[i - 1][j] && list[i - 1][j] == true)
-					{
-						dfs(i - 1, j, M, N);
-					}
-
-
 				}
 			}
 		}
@@ -94,4 +83,5 @@ int main(int argc, char* argv[]) {
 		cout << cnt << "\n";
 	}
 
+	return 0;
 }
