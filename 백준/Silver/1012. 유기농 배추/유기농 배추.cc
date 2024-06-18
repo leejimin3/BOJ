@@ -27,12 +27,12 @@ void Init(int M, int N)
 void bfs(int X, int Y)
 {
 	Queue.push({ X, Y });
+	Visit[X][Y] = true;
 	while (!Queue.empty())
 	{
 		int x = Queue.front().first;
 		int y = Queue.front().second;
 		Queue.pop();
-		Visit[x][y] = true;
 
 		for (int i = 0; i < 4; i++)
 		{
