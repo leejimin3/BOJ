@@ -32,6 +32,36 @@ void BFS(int i, int j)
 	}
 }
 
+void Solve()
+{
+	for (int i = 0; i < R; i++)
+	{
+		for (int j = 0; j < C; j++)
+		{
+			if (map[i][j] == 'O')
+			{
+				BFS(i, j);
+			}
+		}
+	}
+
+	for (int i = 0; i < R; i++)
+	{
+		for (int j = 0; j < C; j++)
+		{
+			if (visit[i][j] == true)
+			{
+				map[i][j] = '.';
+				visit[i][j] = false;
+			}
+			else
+			{
+				map[i][j] = 'O';
+			}
+		}
+	}
+}
+
 int main(int argc, char* argv[])
 {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
@@ -65,48 +95,36 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-
-	cnt = 3;
-	while (N+1 > cnt)
+	if (N % 4 == 1)
 	{
-		for (int i = 0; i < R; i++)
+		for (int i = 0; i < 2; i++)
 		{
-			for (int j = 0; j < C; j++)
-			{
-				if (map[i][j] == 'O')
-				{
-					BFS(i, j);
-				}
-			}
+			Solve();
 		}
 
 		for (int i = 0; i < R; i++)
 		{
 			for (int j = 0; j < C; j++)
 			{
-				if (visit[i][j] == true)
-				{
-					map[i][j] = '.';
-					visit[i][j] = false;
-				}
-				else
-				{
-					map[i][j] = 'O';
-				}
+				cout << map[i][j];
 			}
+			cout << "\n";
 		}
-		cnt += 2;
 	}
 
+	else if (N % 4 == 3)
+	{
+		Solve();
+
+		for (int i = 0; i < R; i++)
+		{
+			for (int j = 0; j < C; j++)
+			{
+				cout << map[i][j];
+			}
+			cout << "\n";
+		}
+	}
 	
-
-	for (int i = 0; i < R; i++)
-	{
-		for (int j = 0; j < C; j++)
-		{
-			cout << map[i][j];
-		}
-		cout << "\n";
-	}
 	return 0;
 }
