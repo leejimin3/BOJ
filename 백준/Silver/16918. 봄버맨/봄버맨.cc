@@ -73,14 +73,6 @@ int main(int argc, char* argv[])
 		{
 			for (int j = 0; j < C; j++)
 			{
-				visit[i][j] = false;
-			}
-		}
-
-		for (int i = 0; i < R; i++)
-		{
-			for (int j = 0; j < C; j++)
-			{
 				if (map[i][j] == 'O')
 				{
 					BFS(i, j);
@@ -95,6 +87,7 @@ int main(int argc, char* argv[])
 				if (visit[i][j] == true)
 				{
 					map[i][j] = '.';
+					visit[i][j] = false;
 				}
 				else
 				{
@@ -111,14 +104,7 @@ int main(int argc, char* argv[])
 	{
 		for (int j = 0; j < C; j++)
 		{
-			if (visit[i][j] == true)
-			{
-				cout << '.';
-			}
-			else
-			{
-				cout << 'O';
-			}
+			cout << map[i][j];
 		}
 		cout << "\n";
 	}
