@@ -4,7 +4,6 @@ using namespace std;
 
 int N; int cnt = 0;
 string word;
-//int alp[26];
 int main(int argc, char* argv[]) {
 
 	cin >> N;
@@ -19,7 +18,6 @@ int main(int argc, char* argv[]) {
 		alp[prevalp - 97]++;
 		for (int j = 1; j < word.length(); j++)
 		{
-			//cout << alp[word[j]-97] << "\n";
 			if (alp[word[j] - 97] >= 1 && prevalp != word[j])
 			{
 				F = true;
@@ -31,11 +29,9 @@ int main(int argc, char* argv[]) {
 				prevalp = word[j];
 			}
 		}
-
 		if (!F) cnt++;
 	}
 
 	cout << cnt << "\n";
-
 	return 0;
 }
