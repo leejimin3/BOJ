@@ -1,57 +1,38 @@
 #include <iostream>
 #include <string>
-#include <stack>
 using namespace std;
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-	int T;
-	cin >> T;
-	cin.ignore();
-
-	for(int t = 0; t<T; t++)
+	int N; cin >> N;
+	
+	for(int i = 0; i< N; i++)
 	{
-		stack<char> stack;
+		string tmp; cin >> tmp;
+		int Lnum = 0, Rnum = 0; bool F = false;
 
-		string tmp;
-		getline(cin, tmp);
-		bool flag = false;
-
-		if (tmp[0] == '.')
-			return 0;
-
-		for (int i = 0; i < tmp.size(); i++)
+		for (int k = 0; k < tmp.length(); k++)
 		{
-			if (tmp[i] == '(')
-			{
-				stack.push(tmp[i]);
-			}
+			if (tmp[k] == '(') Lnum++;
+			if (tmp[k] == ')') Rnum++;
 
-			if (tmp[i] == ')')
+			if (Rnum > Lnum)
 			{
-				if (stack.empty() == true || stack.top() != '(')
-				{
-					flag = true;
-					break;
-				}
-				else
-				{
-					stack.pop();
-				}
+				F = true;
 			}
 		}
 
-		if (stack.empty() == false || flag == true)
+		if (Rnum != Lnum)
 		{
-			cout << "NO" << "\n";
-		}
-		else
-		{
-			cout << "YES" << "\n";
+			F = true;
 		}
 
+		if (F) cout << "NO" << "\n";
+		else cout << "YES" << "\n";
 	}
+	
+	
 
+	return 0;
 }
