@@ -24,6 +24,5 @@ void Func(int cnt, int k, vector<vector<int>> &dungeons)
 int solution(int k, vector<vector<int>> dungeons) {
     
     Func(0, k, dungeons);
-    
     return answer;
 }
