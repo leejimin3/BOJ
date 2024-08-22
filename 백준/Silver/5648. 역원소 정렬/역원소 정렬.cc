@@ -4,7 +4,7 @@
 
 using namespace std;
 
-long long n;
+int n;
 vector<long long> vec;
 
 // 정수 입력
