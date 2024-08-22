@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 		{
 			while(arr[i][j] >= 1)
 			{
-				arr[i][j] -= 2;
+				arr[i][j] -= K;
 				res++;
 			}
 		}
