@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
 int T, N, M;
@@ -31,14 +33,18 @@ int main(int argc, char* argv[]) {
 			B.emplace_back(tmp);
 		}
 
+		sort(A.begin(), A.end());
+		sort(B.begin(), B.end());
+
 		for (int i = 0; i < N; i++)
 		{
 			for (int j = 0; j < M; j++)
 			{
-				if (A[i] > B[j])
+				if (B[j] >= A[i])
 				{
-					cnt++;
+					break;
 				}
+				cnt++;
 			}
 		}
 
@@ -46,4 +52,4 @@ int main(int argc, char* argv[]) {
 	}
 
 	return 0;
-} 
+}
