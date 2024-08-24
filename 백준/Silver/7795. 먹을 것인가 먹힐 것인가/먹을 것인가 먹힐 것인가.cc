@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 	while (T--)
 	{
 		int cnt = 0;
+		int point = 0;
 		vector<int> A;
 		vector<int> B;
 
@@ -38,14 +39,11 @@ int main(int argc, char* argv[]) {
 
 		for (int i = 0; i < N; i++)
 		{
-			for (int j = 0; j < M; j++)
+			while (point < M && A[i] > B[point])
 			{
-				if (B[j] >= A[i])
-				{
-					break;
-				}
-				cnt++;
+				point++;
 			}
+			cnt += point;
 		}
 
 		cout << cnt << "\n";
