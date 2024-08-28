@@ -1,35 +1,60 @@
+//#include <bits/stdc++.h>
+
 #include <iostream>
 #include <algorithm>
- 
-int dp[500][500] = { 0, };
- 
 using namespace std;
-int main()
+
+int N;
+int Max = 0;
+int dp[500][500] = { 0,};
+
+void Solution()
 {
-	int n, maxNumber = 0;
-	cin >> n;
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j <= i; j++)
+		{
+			if (j == 0)
+			{
+				dp[i][j] = dp[i - 1][0] + dp[i][j];
+			}
+			else if (j == i)
+			{
+				dp[i][j] = dp[i - 1][j - 1] + dp[i][j];
+			}
+			else
+			{
+				dp[i][j] = max(dp[i - 1][j - 1] + dp[i][j], dp[i - 1][j] + dp[i][j]);
+			}
+
+			Max = max(dp[i][j], Max);
+		}
+	}
+}
+
+void Input()
+{
+	cin >> N;
+
+	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j <= i; j++)
 		{
 			cin >> dp[i][j];
 		}
 	}
- 
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j <= i; j++)
-		{
-			if (j == 0)
-				dp[i][j] = dp[i - 1][0] + dp[i][j];
-			else if (i == j)
-				dp[i][j] = dp[i - 1][j - 1] + dp[i][j];
-			else
-				dp[i][j] = max(dp[i - 1][j - 1] + dp[i][j], dp[i - 1][j] + dp[i][j]);
- 
-			maxNumber = max(maxNumber, dp[i][j]);
-		}
-	}
- 
-	cout << maxNumber;
+}
+
+void Output()
+{
+	cout << Max;
+}
+
+int main(int argc, char* argv[]) {
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	
+	Input();
+	Solution();
+	Output();
+	return 0;
 }
