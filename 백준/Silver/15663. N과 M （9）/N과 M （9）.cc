@@ -1,34 +1,36 @@
 #include <iostream>
 #include <algorithm>
-#include <set>
 #include <vector>
 
 using namespace std;
 
 int N, M;
-set<vector<int>> Set;
-vector<int> vec;
-vector<int> arr;
+int arr[10];
 bool bisused[10];
+vector<int> vec;
 
 // k 는 선택한 갯수
 void BT(int k)
 {
 	if (k == M)
 	{
-		Set.insert(arr);
-
+		for (int i = 0; i < M; i++)
+		{
+			cout << arr[i] << ' ';
+		}
+		cout << '\n';
 		return;
 	}
 
-	for (int i = 0; i < N; i++)
+	int last = 0;
+	for (int i = 0; i < N; i++) 
 	{
-		if (!bisused[i])
+		if (!bisused[i] && last != vec[i])
 		{
-			arr.emplace_back(vec[i]);
 			bisused[i] = true;
+			arr[k] = vec[i];
+			last = arr[k];
 			BT(k + 1);
-			arr.pop_back();
 			bisused[i] = false;
 		}
 	}
@@ -53,23 +55,15 @@ void Input()
 	sort(vec.begin(), vec.end());
 }
 
-void Output()
-{
-	for (const auto& i : Set)
-	{
-		for (const auto& j : i)
-		{
-			cout << j << " ";
-		}
-		cout << "\n";
-	}
-}
+//void Output()
+//{
+//}
 
 int main(int argc, char* argv[]) {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
 	Input();
 	Solution();
-	Output();
+	//Output();
 	return 0;
 }
