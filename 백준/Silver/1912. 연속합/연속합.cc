@@ -27,7 +27,7 @@ void Solution()
 	Max = DP[1];
 	for (int i = 2; i <= N; i++)
 	{
-		if (arr[i - 1] > arr[i - 1] + DP[i - 1])
+		if (arr[i] > arr[i] + DP[i - 1])
 		{
 			DP[i] = arr[i];
 		}
