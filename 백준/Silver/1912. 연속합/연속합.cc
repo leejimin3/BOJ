@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,11 +10,6 @@ int arr[100001];
 void Input()
 {
 	cin >> N;
-
-	for (int i = 1; i <= N; i++)
-	{
-		cin >> arr[i];
-	}
 }
 
 void Output()
@@ -23,23 +19,16 @@ void Output()
 
 void Solution()
 {
+	cin >> arr[1];
 	DP[1] = arr[1];
 	Max = DP[1];
+
 	for (int i = 2; i <= N; i++)
 	{
-		if (arr[i] > arr[i] + DP[i - 1])
-		{
-			DP[i] = arr[i];
-		}
-		else
-		{
-			DP[i] = DP[i - 1] + arr[i];
-		}
+		cin >> arr[i];
 
-		if (DP[i] > Max)
-		{
-			Max = DP[i];
-		}
+		DP[i] = max(arr[i], DP[i - 1] + arr[i]);
+		Max = max(DP[i], Max);
 	}
 }
 
