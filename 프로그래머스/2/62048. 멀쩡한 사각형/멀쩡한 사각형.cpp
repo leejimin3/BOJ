@@ -13,9 +13,12 @@ long long GCD(int w, int h)
 long long solution(int w,int h) {
     long long answer = 0;
     
-    sum = (long long)w*h;
-    gcd = GCD(w,h);
-    answer = sum - (w + h - gcd); 
+    long long ans;
+    for(int i = 1; i < w; i++)
+    {
+        ans = ((double)h*i)/w;
+        answer+=ans;
+    }
     
-    return answer;
+    return answer*2;
 }
