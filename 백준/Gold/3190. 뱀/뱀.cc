@@ -6,9 +6,6 @@ using namespace std;
 // 뱀 영역 (좌표)
 queue <pair<int, int>> q;
 
-// 뱀 진행 방향 (초기화 오른쪽)
-pair<int, int> dir = {0, 1};
-
 // 뱀위 위치 (초기화 0,0)
 pair<int, int> pos = { 0, 0 };
 
@@ -24,6 +21,12 @@ int N, K;
 // 변환 횟수
 int L;
 
+int nodex[5] = {0, 0,1,0,-1};
+int nodey[5] = {0, 1,0,-1,0};
+
+//1동 2남 3서 4북
+int dir = 1;
+
 // 시간 카운트
 int cnt = 0;
 
@@ -35,7 +38,7 @@ void Input()
 	for (int i = 0; i < K; i++)
 	{
 		cin >> tmp1 >> tmp2;
-		field[tmp1-1][tmp2-1] = 1;
+		field[tmp1 - 1][tmp2 - 1] = 1;
 	}
 
 	cin >> L;
@@ -44,7 +47,7 @@ void Input()
 	for (int i = 0; i < L; i++)
 	{
 		cin >> tmp >> chr;
-		order.push({ tmp, chr});
+		order.push({ tmp, chr });
 	}
 }
 
@@ -53,7 +56,7 @@ void Output()
 	cout << cnt << "\n";
 }
 
-bool IsCrash(pair<int,int> pos)
+bool IsCrash(pair<int, int> pos)
 {
 	for (int i = 0; i < q.size(); i++)
 	{
@@ -64,7 +67,6 @@ bool IsCrash(pair<int,int> pos)
 		{
 			return true;
 		}
-			
 
 		q.push(tmp);
 	}
@@ -75,81 +77,37 @@ bool IsCrash(pair<int,int> pos)
 
 void CheckDir()
 {
+	bool flag = false;
 	char rot = ' ';
 	for (int i = 0; i < order.size(); i++)
 	{
-		pair<int, char> tmp = order.front();
-		order.pop();
-
-		if (cnt == tmp.first)
+		if (cnt == order.front().first)
 		{
-			rot = tmp.second;
+			rot = order.front().second;
+			flag = true;
+			order.pop();
 		}
-
-		order.push({ tmp.first, tmp.second });
 	}
 
-	if (rot == ' ')
+	if (!flag)
 	{
 		return;
 	}
-		
 
-	int x = dir.first;
-	int y = dir.second;
-
-	if (rot == 'L')
+	if (rot == 'D')
 	{
-		//동
-		if (x == 0 && y == 1)
+		dir++;
+		if (dir > 4)
 		{
-			dir.first = -1;
-			dir.second = 0;
-		}
-		//서
-		else if(x == 0 && y == -1)
-		{
-			dir.first = 1;
-			dir.second = 0;
-		}
-		//북
-		else if (x == -1 && y == 0)
-		{
-			dir.first = 0;
-			dir.second = -1;
-		}
-		//남
-		else if (x == 1 && y == 0)
-		{
-			dir.first = 0;
-			dir.second = 1;
+			dir = 1;
 		}
 	}
 	else
 	{
-		//동
-		if (x == 0 && y == 1)
+		dir--;
+		if (dir < 1)
 		{
-			dir.first = 1;
-			dir.second = 0;
-		}
-		//서
-		else if (x == 0 && y == -1)
-		{
-			dir.first = -1;
-			dir.second = 0;
-		}
-		//북
-		else if (x == -1 && y == 0)
-		{
-			dir.first = 0;
-			dir.second = 1;
-		}
-		//남
-		else if (x == 1 && y == 0)
-		{
-			dir.first = 0;
-			dir.second = -1;
+			dir = 4;
 		}
 	}
 }
@@ -160,11 +118,11 @@ void Solution()
 	while (1)
 	{
 		cnt++;
-		int x1 = pos.first + dir.first;
-		int y1 = pos.second + dir.second;
-			
+		int x1 = pos.first + nodex[dir];
+		int y1 = pos.second + nodey[dir];
+
 		//cout << x1 << y1 << "\n";
-			
+
 		// 충돌 시 리턴
 		if (IsCrash({ x1,y1 }) || x1 >= N || y1 >= N || x1 < 0 || y1 < 0)
 		{
@@ -193,7 +151,7 @@ int main(int argc, char* argv[]) {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
 	Input();
-	
+
 	Solution();
 	Output();
 	return 0;
