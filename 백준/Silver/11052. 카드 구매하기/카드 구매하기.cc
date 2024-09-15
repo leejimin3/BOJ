@@ -22,23 +22,6 @@ void Output()
 	cout << DP[N] << "\n";
 }
 
-int GetMax(int x)
-{
-	int Max = 0;
-	for (int i = 1; i <= x; i++)
-	{
-		if (x % i == 0)
-		{
-			int tmp = arr[i] * x / i;
-			if (tmp > Max)
-			{
-				Max = tmp;
-			}
-		}
-	}
-	return Max;
-}
-
 void Solution() 
 {	
 	for (int i = 1; i <= N; i++)
